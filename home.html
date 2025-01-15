@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riepilogo Presenze Doposcuola</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            font-size: 2em;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+        .title-bar {
+            background-color: #ffffff;
+            border-bottom: 2px solid #4CAF50;
+            padding: 10px 0;
+            margin-bottom: 30px;
+        }
+        .title-bar p {
+            font-size: 1.2em;
+            color: #333;
+            margin: 0;
+            text-align: center;
+        }
+        .summary-container {
+            width: 80%;
+            margin: 40px auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .summary-container h2 {
+            font-size: 1.8em;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        .summary-container p {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .summary-table th, .summary-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        .summary-table th {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1.2em;
+        }
+        .summary-table tr:nth-child(even) {
+            background-color: #e3f2fd;
+        }
+        .summary-table tr:nth-child(odd) {
+            background-color: #f5f5f5;
+        }
+        .no-absence-message {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border: 1px solid #4CAF50;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 1.5em;
+            color: #388E3C;
+        }
+        .no-absence-message .icon {
+            font-size: 1.8em;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Riepilogo Presenze Doposcuola</h1>
+</header>
+
+<div class="title-bar">
+    <p>{{ cur_date }}</p>
+</div>
+
+<div class="summary-container">
+    <h2>Dettagli del Giorno</h2>
+    <p><strong>Responsabile del Giorno:</strong> {{ responsabile }}</p>
+    {% if volontario1 != 'Nessun volontario' %}
+    <tr>
+        <p><strong>Volontario 1:</strong> {{ volontario1 }}</p>
+    </tr>
+    {% endif %}
+    
+    {% if volontario2 != 'Nessun volontario' %}
+    <tr>
+        <p><strong>Volontario 2:</strong> {{ volontario2 }}</p>
+    </tr>
+    {% endif %}
+    
+    {% if volontario3 != 'Nessun volontario' %}
+    <tr>
+        <p><strong>Volontario 3:</strong> {{ volontario3 }}</p>
+    </tr>
+    {% endif %}
+
+    {% if ass_n %}
+    <h2>Assenze Registrate</h2>
+    <table class="summary-table">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>Classe</th>
+        </tr>
+        {% for nome, cognome, classe in zip(ass_n, ass_c, ass_cl) %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ nome }}</td>
+            <td>{{ cognome }}</td>
+            <td>{{ classe }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+
+    <div class="no-absence-message">
+        <p> Nessun assente</p>
+    </div>
+
+    {% endif %}
+</div>
+
+</body>
+</html>
